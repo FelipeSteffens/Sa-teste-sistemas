@@ -1,4 +1,6 @@
-import logo from '../../assets/images/logo-clinica.png'
+import React from 'react'
+
+import logo from '../../assets/images/catalogo-logo.png'
 import LoginForm from '../../components/LoginForm'
 
 const Login = () => {
