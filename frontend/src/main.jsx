@@ -29,7 +29,7 @@ const router = createBrowserRouter([
       </PrivateRoute>
     ),
     children: [
-      { path: "/dashboard", element: <Dashboard /> }
+  { path: "/painel", element: <Dashboard /> }
     ]
   }
 ]);

@@ -25,5 +25,4 @@ class CellphonesService {
         return await this.cellphonesRepository.findAllCellphones();
     }
 }
-
-export default CellphonesService;
+module.exports = CellphonesService;

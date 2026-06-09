@@ -9,6 +9,7 @@ class CellphonesController {
             const newCellphone = await this.cellphonesService.createCellphone(cellphoneData);
             res.status(201).json(newCellphone);
         } catch (error) {
+            console.error('createCellphone error:', error);
             res.status(500).json({ message: error.message });
         }
     }
@@ -22,6 +23,7 @@ class CellphonesController {
             }
             res.status(200).json(cellphone);
         } catch (error) {
+            console.error('getCellphone error:', error);
             res.status(500).json({ message: error.message });
         }
     }
@@ -36,6 +38,7 @@ class CellphonesController {
             }
             res.status(200).json(updatedCellphone);
         } catch (error) {
+            console.error('updateCellphone error:', error);
             res.status(500).json({ message: error.message });
         }
     }
@@ -49,9 +52,9 @@ class CellphonesController {
             }
             res.status(204).send();
         } catch (error) {
+            console.error('deleteCellphone error:', error);
             res.status(500).json({ message: error.message });
         }
     }
 }
-
-export default CellphonesController;
+module.exports = CellphonesController;

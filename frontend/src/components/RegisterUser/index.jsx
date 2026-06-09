@@ -74,6 +74,7 @@ const RegisterUser = () => {
                     <input
                         type='email'
                         id='email'
+                        data-testid="register-email"
                         value={email}
                         onChange={handleEmailChange}
                         required
@@ -86,6 +87,7 @@ const RegisterUser = () => {
                     <input
                         type='password'
                         id='password'
+                        data-testid="register-password"
                         value={password}
                         onChange={handlePasswordChange}
                         required
@@ -99,6 +101,7 @@ const RegisterUser = () => {
                     <input
                         type='password'
                         id='confirmPassword'
+                        data-testid="register-confirm"
                         value={confirmPassword}
                         onChange={handleConfirmPasswordChange}
                         required
@@ -113,15 +116,15 @@ const RegisterUser = () => {
 
                 <div>
                     <button
+                        data-testid="register-submit"
                         type='submit'
                         disabled={isSaving}
-                        className={`w-full p-2 rounded-lg text-white mt-4 ${isSaving ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700 cursor-pointer'
-                            } transition-colors`}
+                        className={`w-full p-2 rounded-lg text-white mt-4 ${isSaving ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700 cursor-pointer'} transition-colors`}
                     >
-                        {isSaving ? "Salvando ..." : "Criar Usuário"}
-
+                    {isSaving ? "Salvando ..." : "Criar Usuário"}
                     </button>
-                </div>
+
+                        </div>
 
 
 

@@ -38,5 +38,4 @@ class UsersRepository {
         await this.pool.query(query, values);
     }
 }
-
-export default UsersRepository;
+module.exports = UsersRepository;
