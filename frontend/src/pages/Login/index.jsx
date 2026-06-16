@@ -1,7 +1,7 @@
 import React from 'react'
 
 import logo from '../../assets/images/OIP.png'
-import FormularioLogin from '../../components/FormularioLogin'
+import LoginForm from '../../components/LoginForm'
 
 const Login = () => {
     return (
@@ -11,7 +11,7 @@ const Login = () => {
                     <img src={logo} alt='clinica' className='mb-6' />
                 </div>
                 <div className='flex w-full md:w-1/2 items-center justify-center p-8'>
-                    <FormularioLogin />
+                    <LoginForm />
                 </div>
             </div>
         </>

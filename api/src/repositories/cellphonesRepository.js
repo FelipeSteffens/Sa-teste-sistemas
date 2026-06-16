@@ -4,13 +4,13 @@ class CellphonesRepository {
     }
 
     async insertCellphone(cellphone) {
-        const { marca, modelo, cor, preco } = cellphone;
+        const { marca, modelo, cor, preco, descricao } = cellphone;
         const query = `
-            INSERT INTO cellphones (id, marca, modelo, cor, preco, data_cadastro)
-            VALUES (gen_random_uuid(), $1, $2, $3, $4, NOW())
+            INSERT INTO cellphones (marca, modelo, cor, preco, descricao, data_cadastro)
+            VALUES ($1, $2, $3, $4, $5 ,NOW())
             RETURNING *;
         `;
-        const values = [marca, modelo, cor, preco];
+        const values = [marca, modelo, cor, preco, descricao];
         const result = await this.pool.query(query, values);
         return result.rows[0];
     }

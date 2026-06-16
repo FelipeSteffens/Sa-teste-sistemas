@@ -1,24 +1,41 @@
 const request = require('supertest');
 const app = require('../src/app');
 
-describe('Cellphones API', () => {
-  test('POST /api/cellphones should create a cellphone and return 201', async () => {
-    const payload = { marca: 'MarcaX', modelo: 'ModelY', cor: 'Preto', preco: 1999 };
+describe('API Celulares', () => {
+ 
+  describe('POST /api/cellphones', () => {
+    test('Deve criar um celular com sucesso e retornar 201', async () => {
+      const payload = { marca: 'MarcaX', modelo: 'ModelY', cor: 'Preto', preco: 1999 };
 
-    const res = await request(app).post('/api/cellphones').send(payload);
-    expect(res.statusCode).toBe(201);
-    expect(res.body).toHaveProperty('id');
-    expect(res.body.marca).toBe(payload.marca);
+      const res = await request(app)
+        .post('/api/cellphones')
+        .send(payload);
+
+      expect(res.statusCode).toBe(201);
+      expect(res.body).toHaveProperty('id');
+      
+      expect(res.body).toMatchObject(payload);
+    });
   });
 
-  test('GET /api/cellphones/:id should return 200 for existing id', async () => {
-    // First create
-    const payload = { marca: 'MarcaA', modelo: 'ModelB', cor: 'Branco', preco: 999 };
-    const createRes = await request(app).post('/api/cellphones').send(payload);
-    const id = createRes.body.id;
+  describe('GET /api/cellphones/:id', () => {
+    test('Deve retornar 200 e o celular correspondente para um ID existente', async () => {
+      const payload = { marca: 'MarcaA', modelo: 'ModelB', cor: 'Branco', preco: 999 };
+      const createRes = await request(app).post('/api/cellphones').send(payload);
+      const { id } = createRes.body;
 
-    const getRes = await request(app).get(`/api/cellphones/${id}`);
-    expect(getRes.statusCode).toBe(200);
-    expect(getRes.body.id).toBe(id);
+      const getRes = await request(app).get(`/api/cellphones/${id}`);
+      
+      expect(getRes.statusCode).toBe(200);
+      expect(getRes.body.id).toBe(id);
+      expect(getRes.body).toMatchObject(payload);
+    });
+
+    test('Deve retornar 404 caso o celular não seja encontrado', async () => {
+      const idInexistente = 9999; 
+      const res = await request(app).get(`/api/cellphones/${idInexistente}`);
+      
+      expect(res.statusCode).toBe(404);
+    });
   });
 });

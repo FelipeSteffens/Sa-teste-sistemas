@@ -1,27 +1,27 @@
-import { test, expect } from '@playwright/test';
+const { test, expect } = require('@playwright/test');
 
-test('fluxo de cadastro e login', async ({ page }) => {
-  // abrir a aplicação
+test('register and login flows', async ({ page }) => {
+  // go to app
   await page.goto('/');
 
-  // abrir modal de cadastro
+  // open register modal
   await page.click('[data-testid="open-register"]');
 
-  // preencher cadastro
+  // fill register
   await page.fill('[data-testid="register-email"]', 'e2e_user@example.com');
   await page.fill('[data-testid="register-password"]', 'password123');
   await page.fill('[data-testid="register-confirm"]', 'password123');
   await page.click('[data-testid="register-submit"]');
 
-  // aguardar o modal fechar ou toast de sucesso
+  // wait for success toast or modal close (simple wait)
   await page.waitForTimeout(500);
 
-  // executar login
+  // perform login
   await page.fill('[data-testid="login-email"]', 'e2e_user@example.com');
   await page.fill('[data-testid="login-password"]', 'password123');
   await page.click('[data-testid="login-submit"]');
 
-  // após login, a aplicação navega para /painel
-  await page.waitForURL('**/painel');
-  await expect(page.locator('h1')).toContainText('Painel');
+  // after login, the app navigates to /dashboard
+  await page.waitForURL('**/dashboard');
+  await expect(page.locator('h1')).toContainText('Dashboard');
 });

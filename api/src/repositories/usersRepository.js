@@ -5,7 +5,7 @@ class UsersRepository {
 
     async insertUser(user) {
         const { name, email, password } = user;
-        const query = 'INSERT INTO users (id, name, email, password) VALUES (uuid_generate_v4(), $1, $2, $3) RETURNING id';
+        const query = 'INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING id';
         const values = [name, email, password];
         const result = await this.pool.query(query, values);
         return result.rows[0].id;
@@ -17,6 +17,11 @@ class UsersRepository {
         const result = await this.pool.query(query, values);
         return result.rows[0];
     }
+    async findUser() {
+        const query = 'SELECT * FROM users';
+        const result = await this.pool.query(query);
+        return result.rows
+    }
 
     async findUserByEmail(email) {
         const query = 'SELECT * FROM users WHERE email = $1';
@@ -26,16 +31,22 @@ class UsersRepository {
     }
 
     async updateUser(id, user) {
-        const { name, email, password } = user;
-        const query = 'UPDATE users SET name = $1, email = $2, password = $3 WHERE id = $4';
-        const values = [name, email, password, id];
-        await this.pool.query(query, values);
-    }
+    const { name, email, password } = user;
+    
+    const query = 'UPDATE users SET name = $1, email = $2, password = $3 WHERE id = $4 RETURNING *';
+    const values = [name, email, password, id];
+   
+    const result = await this.pool.query(query, values);
+    
+    return result.rows[0] || null; 
+}
 
     async deleteUser(id) {
-        const query = 'DELETE FROM users WHERE id = $1';
+        const query = 'DELETE FROM users WHERE id = $1 RETURNING *';
         const values = [id];
-        await this.pool.query(query, values);
+        const result = await this.pool.query(query,values);
+
+        return result.rows
     }
 }
 module.exports = UsersRepository;

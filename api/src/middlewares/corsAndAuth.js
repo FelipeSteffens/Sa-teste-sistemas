@@ -2,7 +2,7 @@ const cors = require('cors');
 const jwt = require('jsonwebtoken');
 
 const corsOptions = {
-    origin: 'http://localhost:3000', // Altere para o domínio do seu frontend
+    origin: 'http://localhost:3000',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
 };

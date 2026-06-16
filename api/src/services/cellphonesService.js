@@ -4,7 +4,7 @@ class CellphonesService {
     }
 
     async createCellphone(cellphoneData) {
-        // Validate cellphone data here (e.g., check required fields)
+    
         return await this.cellphonesRepository.insertCellphone(cellphoneData);
     }
 
@@ -13,7 +13,6 @@ class CellphonesService {
     }
 
     async updateCellphone(id, cellphoneData) {
-        // Validate updated cellphone data here
         return await this.cellphonesRepository.updateCellphone(id, cellphoneData);
     }
 

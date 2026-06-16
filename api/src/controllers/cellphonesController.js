@@ -19,7 +19,7 @@ class CellphonesController {
             const { id } = req.params;
             const cellphone = await this.cellphonesService.getCellphone(id);
             if (!cellphone) {
-                return res.status(404).json({ message: 'Cellphone not found' });
+                return res.status(404).json({ message: 'Celular não encontrado!' });
             }
             res.status(200).json(cellphone);
         } catch (error) {
@@ -34,7 +34,7 @@ class CellphonesController {
             const cellphoneData = req.body;
             const updatedCellphone = await this.cellphonesService.updateCellphone(id, cellphoneData);
             if (!updatedCellphone) {
-                return res.status(404).json({ message: 'Cellphone not found' });
+                return res.status(404).json({ message: 'Celular não encontrado!' });
             }
             res.status(200).json(updatedCellphone);
         } catch (error) {
@@ -48,7 +48,7 @@ class CellphonesController {
             const { id } = req.params;
             const deleted = await this.cellphonesService.deleteCellphone(id);
             if (!deleted) {
-                return res.status(404).json({ message: 'Cellphone not found' });
+                return res.status(404).json({ message: 'Celular não encontrado!' });
             }
             res.status(204).send();
         } catch (error) {

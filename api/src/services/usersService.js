@@ -4,20 +4,20 @@ class UsersService {
     }
 
     async createUser(userData) {
-        // Validate user data (e.g., check for required fields)
-        // Hash the password before saving
         const hashedPassword = await this.hashPassword(userData.password);
         userData.password = hashedPassword;
 
         return this.usersRepository.insertUser(userData);
     }
 
-    async getUser(userId) {
+    async getUserById(userId) {
         return this.usersRepository.findUserById(userId);
+    }
+    async getUser() {
+        return this.usersRepository.findUser();
     }
 
     async updateUser(userId, userData) {
-        // Validate user data
         if (userData.password) {
             userData.password = await this.hashPassword(userData.password);
         }
@@ -25,7 +25,7 @@ class UsersService {
     }
 
     async deleteUser(userId) {
-        return this.usersRepository.deleteUser(userId);
+        return await this.usersRepository.deleteUser(userId);
     }
 
     async hashPassword(password) {

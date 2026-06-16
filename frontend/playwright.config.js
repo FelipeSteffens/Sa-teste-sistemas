@@ -1,11 +1,11 @@
-// Playwright basic config (ESM)
-import { defineConfig } from '@playwright/test';
+// Playwright basic config
+const { defineConfig } = require('@playwright/test');
 
-export default defineConfig({
+module.exports = defineConfig({
   testDir: './tests',
   timeout: 30 * 1000,
   use: {
     headless: true,
-    baseURL: 'http://localhost:5174'
+    baseURL: 'http://localhost:5173'
   }
 });
