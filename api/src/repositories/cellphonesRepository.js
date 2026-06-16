@@ -20,6 +20,11 @@ class CellphonesRepository {
         const result = await this.pool.query(query, [id]);
         return result.rows[0];
     }
+    async findCellphones() {
+    const query = 'SELECT * FROM cellphones';
+        const result = await this.pool.query(query);
+        return result.rows;
+    }
 
     async updateCellphone(id, cellphone) {
         const { marca, modelo, cor, preco } = cellphone;
@@ -40,11 +45,6 @@ class CellphonesRepository {
         return result.rows[0];
     }
 
-    async getAllCellphones() {
-    const query = 'SELECT * FROM cellphones;';
-        const result = await this.pool.query(query);
-        return result.rows;
-    }
 }
 
 module.exports = CellphonesRepository;

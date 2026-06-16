@@ -8,8 +8,11 @@ class CellphonesService {
         return await this.cellphonesRepository.insertCellphone(cellphoneData);
     }
 
-    async getCellphone(id) {
+    async getCellphoneById(id) {
         return await this.cellphonesRepository.findCellphoneById(id);
+    }
+    async getCellphones() {
+        return await this.cellphonesRepository.findCellphones();
     }
 
     async updateCellphone(id, cellphoneData) {

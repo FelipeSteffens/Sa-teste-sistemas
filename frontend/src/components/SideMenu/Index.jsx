@@ -48,7 +48,7 @@ const SideMenu = () => {
         <ul className="space-y-3">
           <li>
             <NavLink
-              to="/dashboard"
+              to="/painel"
               className={({ isActive }) =>
                 `flex items-center gap-3 ${isActive ? "text-cyan-300" : "text-white"}`
               }

@@ -14,10 +14,23 @@ class CellphonesController {
         }
     }
 
-    async getCellphone(req, res) {
+    async getCellphoneById(req, res) {
         try {
             const { id } = req.params;
-            const cellphone = await this.cellphonesService.getCellphone(id);
+            const cellphone = await this.cellphonesService.getCellphoneById(id);
+            if (!cellphone) {
+                return res.status(404).json({ message: 'Celular não encontrado!' });
+            }
+            res.status(200).json(cellphone);
+        } catch (error) {
+            console.error('getCellphone error:', error);
+            res.status(500).json({ message: error.message });
+        }
+    }
+    async getCellphones(req, res) {
+        try {
+            const { id } = req.params;
+            const cellphone = await this.cellphonesService.getCellphones(id);
             if (!cellphone) {
                 return res.status(404).json({ message: 'Celular não encontrado!' });
             }

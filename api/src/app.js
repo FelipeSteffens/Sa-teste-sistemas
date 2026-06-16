@@ -14,4 +14,4 @@ app.use(express.json());
 app.use('/api/users', usersRoutes);
 app.use('/api/cellphones', cellphonesRoutes);
 
-module.exports = app;
+module.exports = app;   
