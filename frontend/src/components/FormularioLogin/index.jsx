@@ -25,7 +25,7 @@ const FormularioLogin = () => {
 
     useEffect(() => {
         if (user) {
-            navigate('/painel')
+            navigate('/dashboard')
         }
     }, [user, navigate])
 
@@ -46,7 +46,7 @@ const FormularioLogin = () => {
 
             toast.success('Login realizado com sucesso!', { autoClose: 2000 })
 
-            setTimeout(() => navigate('/painel', 2000))
+            setTimeout(() => navigate('/dashboard'), 2000)
 
         } catch (error) {
             console.error('Erro ao verificar usuário', error)

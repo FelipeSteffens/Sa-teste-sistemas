@@ -11,6 +11,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
+import Celulares from './pages/Celulares';
 import { AuthProvider } from './contexts/AuthContext';
 import PrivateRoute from './components/PrivateRoute';
 import DashboardLayout from './layouts/DashboardLayout';
@@ -29,7 +30,8 @@ const router = createBrowserRouter([
       </PrivateRoute>
     ),
     children: [
-      { path: "/dashboard", element: <Dashboard /> }
+      { path: "/dashboard", element: <Dashboard /> },
+      { path: "/celulares", element: <Celulares /> }
     ]
   }
 ]);

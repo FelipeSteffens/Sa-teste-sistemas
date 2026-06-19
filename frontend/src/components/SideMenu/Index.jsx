@@ -1,26 +1,18 @@
-import { Link, NavLink, useNavigate } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 import { MdDashboard, MdExitToApp, MdMenu, MdClose } from "react-icons/md";
-
-import { FaUserPlus, FaListAlt, FaCalendarCheck } from "react-icons/fa";
-
+import { FaMobileAlt } from "react-icons/fa";
 import { useAuth } from "../../contexts/AuthContext";
 import { useState } from "react";
 
 const SideMenu = () => {
   const navigate = useNavigate();
-
   const { logout } = useAuth();
-
-  // controle do menu sanfonado
   const [isCollapsed, setIsCollapsed] = useState(false);
 
-  // função do logout
   const handleLogout = () => {
     logout();
     navigate("/");
   };
-
-  //função toggle menu
 
   const toggleMenu = () => {
     setIsCollapsed(!isCollapsed);
@@ -32,9 +24,8 @@ const SideMenu = () => {
         isCollapsed ? "w-20" : "w-64"
       }`}
     >
-      {/* topo - botão toggle */}
       <div className="p-4 flex items-center justify-between border-b border-cyan-700">
-        {!isCollapsed && <h1 className="text-lg font-bold">Clínica +</h1>}
+        {!isCollapsed && <h1 className="text-lg font-bold">Catálogo</h1>}
         <button
           onClick={toggleMenu}
           className="text-white hover:text-cyan-300 focus:outline-none"
@@ -43,12 +34,11 @@ const SideMenu = () => {
         </button>
       </div>
 
-      {/* Menu */}
       <nav className="flex-1 p-4 space-y-4 overflow-y-auto">
         <ul className="space-y-3">
           <li>
             <NavLink
-              to="/painel"
+              to="/dashboard"
               className={({ isActive }) =>
                 `flex items-center gap-3 ${isActive ? "text-cyan-300" : "text-white"}`
               }
@@ -59,41 +49,18 @@ const SideMenu = () => {
           </li>
           <li>
             <NavLink
-              to="/pacientes"
+              to="/celulares"
               className={({ isActive }) =>
                 `flex items-center gap-3 ${isActive ? "text-cyan-300" : "text-white"}`
               }
             >
-              <FaUserPlus size={20} />
-              {!isCollapsed && <span>Pacientes</span>}
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/consultas"
-              className={({ isActive }) =>
-                `flex items-center gap-3 ${isActive ? "text-cyan-300" : "text-white"}`
-              }
-            >
-              <FaCalendarCheck size={20} />
-              {!isCollapsed && <span>Consultas</span>}
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/exames"
-              className={({ isActive }) =>
-                `flex items-center gap-3 ${isActive ? "text-cyan-300" : "text-white"}`
-              }
-            >
-              <FaListAlt size={20} />
-              {!isCollapsed && <span>Exames</span>}
+              <FaMobileAlt size={20} />
+              {!isCollapsed && <span>Celulares</span>}
             </NavLink>
           </li>
         </ul>
       </nav>
 
-      {/* botao sair */}
       <div className="p-4 border-t border-cyan-700">
         <button
           onClick={handleLogout}
