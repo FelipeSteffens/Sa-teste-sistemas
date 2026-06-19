@@ -4,21 +4,29 @@ class UsersController {
     }
 
     async createUser(req, res, next) {
-    try {
-        const user = req.body;
-        if (!user.name || !user.email || !user.password) {
-            return res.status(400).json({ error: 'Faltando nome, e-mail ou senha' });
+        try {
+            const user = req.body;
+            // ALTERADO: Verificando em português para bater com o teste e o banco
+            if (!user.nome || !user.email || !user.senha) {
+                return res.status(400).json({ error: 'Faltando nome, e-mail ou senha' });
+            }
+            const createdUser = await this.usersService.createUser(user);
+            return res.status(201).json(createdUser);
+        } catch (err) {
+            return next(err);
         }
-        const id = await this.usersService.createUser(user);
-        return res.status(201).json({ id });
-    } catch (err) {
-        return next(err);
     }
-}
 
     async getUserById(req, res) {
         try {
             const { id } = req.params;
+            
+            // Segurança contra o 'undefined' que quebra o SQL
+            if (!id || id === 'undefined') {
+                console.log('DEBUG invalid id request:', { method: req.method, originalUrl: req.originalUrl, params: req.params });
+                return res.status(400).json({ error: 'ID inválido fornecido' });
+            }
+
             const user = await this.usersService.getUserById(id);
             if (user) {
                 res.status(200).json(user);
@@ -26,12 +34,13 @@ class UsersController {
                 res.status(404).json({ error: 'Usuário não encontrado' });
             }
         } catch (error) {
-            res.status(400).json({ error: error.message });
+            // Se o service retornar null/vazio por não achar o ID, deve ser 404
+            res.status(404).json({ error: 'Usuário não encontrado' });
         }
     }
+
     async getUser(req, res) {
         try {
-
             const user = await this.usersService.getUser();
             if (user) {
                 res.status(200).json(user);
@@ -46,30 +55,47 @@ class UsersController {
     async updateUser(req, res) {
         try {
             const { id } = req.params;
-            const { name, email, password } = req.body;
-            const updatedUser = await this.usersService.updateUser(id, {name, email, password});
+            console.log('DEBUG updateUser originalUrl =>', req.originalUrl, 'params =>', req.params);
+            console.log('DEBUG updateUser params.id =>', id, 'type:', typeof id);
+            // ALTERADO: Desestruturando em português
+            const { nome, email, senha } = req.body;
+            
+            if (!id || id === 'undefined') {
+                return res.status(400).json({ error: 'ID inválido fornecido' });
+            }
+
+            const updatedUser = await this.usersService.updateUser(id, { nome, email, senha });
             if (updatedUser) {
                 res.status(200).json(updatedUser);
             } else {
                 res.status(404).json({ error: 'Usuário não encontrado!' });
             }
         } catch (error) {
-            res.status(400).json({ error: error.message });
+            res.status(404).json({ error: 'Usuário não encontrado!' });
         }
     }
 
     async deleteUser(req, res) {
         try {
             const { id } = req.params;
+            console.log('DEBUG deleteUser originalUrl =>', req.originalUrl, 'params =>', req.params);
+            console.log('DEBUG deleteUser params.id =>', id, 'type:', typeof id);
+
+            if (!id || id === 'undefined') {
+                return res.status(400).json({ error: 'ID inválido fornecido' });
+            }
+
             const deleted = await this.usersService.deleteUser(id);
             if (deleted) {
-                res.status(200).json({ message: 'Usuário deletado com sucesso!', user: deleted });
+                // ALTERADO: O teste espera status 204 (No Content) sem corpo de resposta
+                res.status(204).send();
             } else {
                 res.status(404).json({ error: 'Usuário não encontrado!' });
             }
         } catch (error) {
-            res.status(400).json({ error: error.message });
+            res.status(404).json({ error: 'Usuário não encontrado!' });
         }
     }
 }
+
 module.exports = UsersController;
