@@ -1,6 +1,7 @@
 import React from "react";
+import { FaEdit, FaTrash } from "react-icons/fa";
 
-const CardCelular = ({ celular }) => {
+const CardCelular = ({ celular, onEditar, onExcluir }) => {
   const formatarPreco = (preco) => {
     const valor = Number(preco);
 
@@ -33,6 +34,25 @@ const CardCelular = ({ celular }) => {
           {celular.cor || "-"}
         </p>
         <p className="text-gray-600">{celular.descricao || "Sem descrição."}</p>
+      </div>
+
+      <div className="flex items-center justify-end gap-2 mt-5 pt-4 border-t border-gray-100">
+        <button
+          type="button"
+          onClick={() => onEditar(celular)}
+          className="flex items-center gap-2 px-3 py-2 text-sm text-cyan-700 border border-cyan-700 rounded-lg hover:bg-cyan-50 transition-colors"
+        >
+          <FaEdit size={14} />
+          Editar
+        </button>
+        <button
+          type="button"
+          onClick={() => onExcluir(celular)}
+          className="flex items-center gap-2 px-3 py-2 text-sm text-red-600 border border-red-500 rounded-lg hover:bg-red-50 transition-colors"
+        >
+          <FaTrash size={14} />
+          Excluir
+        </button>
       </div>
     </article>
   );

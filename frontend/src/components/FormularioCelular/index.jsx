@@ -2,44 +2,45 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 import api from "../../services/api";
 
-const FormularioCelular = ({ onCelularCriado }) => {
-  const [marca, setMarca] = useState("");
-  const [modelo, setModelo] = useState("");
-  const [cor, setCor] = useState("");
-  const [preco, setPreco] = useState("");
-  const [descricao, setDescricao] = useState("");
+const FormularioCelular = ({ celular, onSalvar }) => {
+  const isEditing = Boolean(celular);
+  const [marca, setMarca] = useState(celular?.marca || "");
+  const [modelo, setModelo] = useState(celular?.modelo || "");
+  const [cor, setCor] = useState(celular?.cor || "");
+  const [preco, setPreco] = useState(celular?.preco || "");
+  const [descricao, setDescricao] = useState(celular?.descricao || "");
   const [isSaving, setIsSaving] = useState(false);
-
-  const resetForm = () => {
-    setMarca("");
-    setModelo("");
-    setCor("");
-    setPreco("");
-    setDescricao("");
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSaving(true);
 
-    try {
-      const response = await api.post("/cellphones/criar", {
-        marca,
-        modelo,
-        cor,
-        preco: Number(preco),
-        descricao,
-      });
+    const celularData = {
+      marca,
+      modelo,
+      cor,
+      preco: Number(preco),
+      descricao,
+    };
 
-      resetForm();
-      toast.success("Celular cadastrado com sucesso!", {
-        autoClose: 2000,
-        hideProgressBar: true,
-      });
-      onCelularCriado(response.data);
+    try {
+      const response = isEditing
+        ? await api.put(`/cellphones/atualizar/${celular.id}`, celularData)
+        : await api.post("/cellphones/criar", celularData);
+
+      toast.success(
+        isEditing
+          ? "Celular atualizado com sucesso!"
+          : "Celular cadastrado com sucesso!",
+        {
+          autoClose: 2000,
+          hideProgressBar: true,
+        }
+      );
+      onSalvar(response.data);
     } catch (error) {
-      console.error("Erro ao cadastrar celular", error);
-      toast.error("Erro ao cadastrar celular.", {
+      console.error("Erro ao salvar celular", error);
+      toast.error("Erro ao salvar celular.", {
         autoClose: 3000,
         hideProgressBar: true,
       });
@@ -51,7 +52,7 @@ const FormularioCelular = ({ onCelularCriado }) => {
   return (
     <div className="w-full max-w-md p-2 bg-white rounded-xl">
       <h2 className="text-2xl font-bold mb-6 text-center text-cyan-800">
-        Novo celular
+        {isEditing ? "Editar celular" : "Novo celular"}
       </h2>
 
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -135,7 +136,11 @@ const FormularioCelular = ({ onCelularCriado }) => {
               : "bg-cyan-700 hover:bg-cyan-800 cursor-pointer"
           }`}
         >
-          {isSaving ? "Salvando..." : "Cadastrar celular"}
+          {isSaving
+            ? "Salvando..."
+            : isEditing
+              ? "Salvar alterações"
+              : "Cadastrar celular"}
         </button>
       </form>
     </div>
