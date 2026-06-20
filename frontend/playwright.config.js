@@ -1,11 +1,14 @@
 // Playwright basic config
-const { defineConfig } = require('@playwright/test');
+import { defineConfig } from '@playwright/test';
 
-module.exports = defineConfig({
+export default defineConfig({
   testDir: './tests',
   timeout: 30 * 1000,
   use: {
     headless: true,
-    baseURL: 'http://localhost:5173'
+    baseURL: process.env.PLAYWRIGHT_BASE_URL || 'http://localhost:5173',
+    launchOptions: process.env.PLAYWRIGHT_EXECUTABLE_PATH
+      ? { executablePath: process.env.PLAYWRIGHT_EXECUTABLE_PATH }
+      : undefined
   }
 });

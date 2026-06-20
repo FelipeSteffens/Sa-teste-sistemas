@@ -8,20 +8,27 @@ export const AuthProvider = ({ children }) => {
     //se já tiver email no localStorage, mantém login
 
     useEffect(() => {
+        const savedUser = localStorage.getItem("user")
         const savedEmail = localStorage.getItem("email")
 
-        if (savedEmail) {
+        if (savedUser) {
+            setUser(JSON.parse(savedUser))
+        } else if (savedEmail) {
             setUser({ email: savedEmail })
         }
 
     }, [])
 
-    const login = (email) => {
-        localStorage.setItem("email", email)
-        setUser({ email })
+    const login = (userData) => {
+        const normalizedUser = typeof userData === "string" ? { email: userData } : userData
+
+        localStorage.setItem("user", JSON.stringify(normalizedUser))
+        localStorage.setItem("email", normalizedUser.email)
+        setUser(normalizedUser)
     }
 
     const logout = () => {
+        localStorage.removeItem("user")
         localStorage.removeItem("email")
         setUser(null)
     }

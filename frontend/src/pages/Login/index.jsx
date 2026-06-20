@@ -1,20 +1,23 @@
 import React from 'react'
 
-import logo from '../../assets/images/OIP.png'
+import loginCatalogo from '../../assets/images/login-catalogo.png'
 import FormularioLogin from '../../components/FormularioLogin'
 
 const Login = () => {
     return (
-        <>
-            <div className='flex min-h-screen bg-gray-100'>
-                <div className='hidden md:flex w-1/2 bg-gray-200 flex-col items-center justify-center p-8'>
-                    <img src={logo} alt='Catálogo de celulares' className='mb-6' />
-                </div>
-                <div className='flex w-full md:w-1/2 items-center justify-center p-8'>
-                    <FormularioLogin />
-                </div>
-            </div>
-        </>
+        <main className='min-h-screen bg-white md:grid md:grid-cols-2'>
+            <section className='h-64 overflow-hidden bg-cyan-50 md:h-screen'>
+                <img
+                    src={loginCatalogo}
+                    alt='Celulares do catálogo'
+                    className='h-full w-[235%] max-w-none object-cover object-left'
+                />
+            </section>
+
+            <section className='flex items-center justify-center px-5 py-10 sm:px-8'>
+                <FormularioLogin />
+            </section>
+        </main>
     )
 }
 

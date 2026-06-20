@@ -7,7 +7,6 @@ class UsersService {
     // The tests expect the stored and returned field to be 'senha' in plain text.
     // Keep behavior simple: pass through Portuguese fields to repository.
     const created = await this.usersRepository.insertUser(userData);
-    console.log('DEBUG createUser created =>', created);
     return created;
     }
 

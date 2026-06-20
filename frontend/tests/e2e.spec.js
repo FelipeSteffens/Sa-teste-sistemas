@@ -1,6 +1,8 @@
-const { test, expect } = require('@playwright/test');
+import { test, expect } from '@playwright/test';
 
 test('register and login flows', async ({ page }) => {
+  const email = `e2e_user_${Date.now()}@example.com`;
+
   // go to app
   await page.goto('/');
 
@@ -8,7 +10,8 @@ test('register and login flows', async ({ page }) => {
   await page.click('[data-testid="open-register"]');
 
   // fill register
-  await page.fill('[data-testid="register-email"]', 'e2e_user@example.com');
+  await page.fill('[data-testid="register-name"]', 'Usuario E2E');
+  await page.fill('[data-testid="register-email"]', email);
   await page.fill('[data-testid="register-password"]', 'password123');
   await page.fill('[data-testid="register-confirm"]', 'password123');
   await page.click('[data-testid="register-submit"]');
@@ -17,11 +20,13 @@ test('register and login flows', async ({ page }) => {
   await page.waitForTimeout(500);
 
   // perform login
-  await page.fill('[data-testid="login-email"]', 'e2e_user@example.com');
+  await page.fill('[data-testid="login-email"]', email);
   await page.fill('[data-testid="login-password"]', 'password123');
   await page.click('[data-testid="login-submit"]');
 
   // after login, the app navigates to /dashboard
   await page.waitForURL('**/dashboard');
-  await expect(page.locator('h1')).toContainText('Dashboard');
+  await expect(
+    page.getByRole('heading', { name: 'Dashboard', exact: true })
+  ).toBeVisible();
 });

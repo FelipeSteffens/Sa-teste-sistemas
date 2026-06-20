@@ -23,7 +23,6 @@ class UsersController {
             
             // Segurança contra o 'undefined' que quebra o SQL
             if (!id || id === 'undefined') {
-                console.log('DEBUG invalid id request:', { method: req.method, originalUrl: req.originalUrl, params: req.params });
                 return res.status(400).json({ error: 'ID inválido fornecido' });
             }
 
@@ -55,8 +54,6 @@ class UsersController {
     async updateUser(req, res) {
         try {
             const { id } = req.params;
-            console.log('DEBUG updateUser originalUrl =>', req.originalUrl, 'params =>', req.params);
-            console.log('DEBUG updateUser params.id =>', id, 'type:', typeof id);
             // ALTERADO: Desestruturando em português
             const { nome, email, senha } = req.body;
             
@@ -78,9 +75,6 @@ class UsersController {
     async deleteUser(req, res) {
         try {
             const { id } = req.params;
-            console.log('DEBUG deleteUser originalUrl =>', req.originalUrl, 'params =>', req.params);
-            console.log('DEBUG deleteUser params.id =>', id, 'type:', typeof id);
-
             if (!id || id === 'undefined') {
                 return res.status(400).json({ error: 'ID inválido fornecido' });
             }

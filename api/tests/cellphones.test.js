@@ -50,7 +50,7 @@ describe('API Celulares', () => {
     // --- PUT ---
     describe('PUT /api/cellphones/atualizar/:id', () => {
       test('Deve atualizar um celular existente e retornar 200 com os dados atualizados', async () => {
-        const updatedPayload = { marca: 'MarcaU', modelo: 'ModelU2', cor: 'Azul', preco: 1100, descricao: 'Celular de teste' };
+        const updatedPayload = { marca: 'MarcaU', modelo: 'ModelU2', cor: 'Azul', preco: 1100, descricao: 'Descricao atualizada' };
         
         const updateRes = await request(app)
           .put(`/api/cellphones/atualizar/${idExistente}`)

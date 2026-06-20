@@ -1,8 +1,21 @@
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
 
+const allowedOrigins = [
+    'http://localhost:3000',
+    'http://localhost:5173',
+    'http://localhost:5174',
+];
+
 const corsOptions = {
-    origin: 'http://localhost:3000',
+    origin: (origin, callback) => {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+            return;
+        }
+
+        callback(new Error('Origem não permitida pelo CORS'));
+    },
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
 };

@@ -27,14 +27,14 @@ class CellphonesRepository {
     }
 
     async updateCellphone(id, cellphone) {
-        const { marca, modelo, cor, preco } = cellphone;
+        const { marca, modelo, cor, preco, descricao } = cellphone;
         const query = `
             UPDATE cellphones
-            SET marca = $1, modelo = $2, cor = $3, preco = $4
-            WHERE id = $5
+            SET marca = $1, modelo = $2, cor = $3, preco = $4, descricao = $5
+            WHERE id = $6
             RETURNING *;
         `;
-        const values = [marca, modelo, cor, preco, id];
+        const values = [marca, modelo, cor, preco, descricao, id];
         const result = await this.pool.query(query, values);
         return result.rows[0];
     }
