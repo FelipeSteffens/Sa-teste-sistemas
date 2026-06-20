@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import api from "../../services/api";
 import CardCelular from "../../components/CardCelular";
+import Modal from "../../components/Modal";
+import FormularioCelular from "../../components/FormularioCelular";
 
 const Celulares = () => {
   const [celulares, setCelulares] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const carregarCelulares = async () => {
@@ -26,11 +29,19 @@ const Celulares = () => {
     carregarCelulares();
   }, []);
 
+  const handleCelularCriado = (novoCelular) => {
+    setCelulares((celularesAtuais) => [novoCelular, ...celularesAtuais]);
+    setIsModalOpen(false);
+  };
+
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-xl font-bold text-cyan-800">Celulares</h1>
-        <button className="px-4 py-2 bg-cyan-700 text-white rounded-lg hover:bg-cyan-800 transition-colors">
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="px-4 py-2 bg-cyan-700 text-white rounded-lg hover:bg-cyan-800 transition-colors"
+        >
           Novo celular
         </button>
       </div>
@@ -58,6 +69,10 @@ const Celulares = () => {
           </div>
         )}
       </div>
+
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <FormularioCelular onCelularCriado={handleCelularCriado} />
+      </Modal>
     </div>
   );
 };
